@@ -1,0 +1,97 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    background-color: #464646;
+    color: white;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.yellow {
+    color: #ffc000;
+    fill: #ffc000;
+}
+
+div.container, div.chevron, h1 {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  height: 72px;
+}
+
+div.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+@keyframes chevron-in {
+  0% { opacity: 0; left: 100% }
+  15% { opacity: 0; }
+  75% { opacity: 1; }
+  100% { left: 0 }
+}
+
+@keyframes text-in {
+  to { background-position: 100%;}
+}
+
+@keyframes background-in {
+  from { opacity: 0 }
+  to { opacity: 0.3 }
+}
+
+div.chevron {
+  position: relative;
+  z-index: 1;
+  animation-name: chevron-in;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+}
+
+h1 {
+    font-weight: bold;
+    position: relative;
+    top: -10px;
+    font-size: 72px;
+    background-image: linear-gradient(to right, #464646 0%, #464646 50%, #ffffff 75%, #ffffff 100%);
+    background-size: auto auto;
+    background-clip: border-box;
+    background-size: 350%;
+    color: #fff;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: text-in 2s ease-in-out 1;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+div.footer {
+  font-size: 12px;
+  width: 100%;
+  text-align: center;
+  display: block;
+  position: fixed;
+  bottom: 10px;
+  opacity: 0.3;
+}
+
+div.background {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  fill: #000;
+  opacity: 0;
+  height: 100%;
+  animation: background-in 2s linear 1;
+  animation-delay: 2s;
+  animation-fill-mode: forwards;
+  overflow: hidden;
+}

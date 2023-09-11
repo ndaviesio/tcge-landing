@@ -1,0 +1,39 @@
+---
+  name: Deploy Website
+  on:
+    push:
+      branches: [master]
+    workflow_dispatch:
+
+  jobs:
+    deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+
+        - name: Start Deploy
+          id: start-deploy
+          uses: bobheadxi/deployments@v1
+          with:
+            step: start
+            token: ${{ secrets.GITHUB_TOKEN }}
+            env: Website
+
+        - uses: jakejarvis/s3-sync-action@master
+          env:
+            AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: 'eu-west-2'
+
+        - name: Finish Deploy
+          id: finish-deploy
+          uses: bobheadxi/deployments@v1
+          if: always()
+          with:
+            step: finish
+            token: ${{ secrets.GITHUB_TOKEN }}
+            env: Website
+            env_url: https://tcge.uk
+            status: ${{ job.status }}
+            deployment_id: ${{ steps.start-deploy.outputs.deployment_id }}
